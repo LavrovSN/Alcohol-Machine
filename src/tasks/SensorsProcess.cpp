@@ -3,7 +3,6 @@
 
 #include <ProcessScheduler.h>
 #include "WebSocketServerProcess.cpp"
-//#include <ArduinoJson.h>
 struct s_data
 {
     int temp1;
@@ -107,42 +106,42 @@ protected:
 		      outputValveCount++;
 	    }
       if (outputValveCount != 1) {
-          return 5; //Авария если количество открытых выпускных клапанов не равно 1
+          return 31; //Авария если количество открытых выпускных клапанов не равно 1
       }
       if ((sensorsData.temp1 > params.crashStateTemp1Min) || (sensorsData.temp1 < params.crashStateTemp1Max)){
-        return 5; //Авария по температуре в перегонном кубе
+        return 32; //Авария по температуре в перегонном кубе
       }
       if ((sensorsData.temp2 > params.crashStateTemp2Min) || (sensorsData.temp2 < params.crashStateTemp2Max)){
-        return 5; //Авария по температуре в блоке МСД
+        return 33; //Авария по температуре в блоке МСД
       }
       if((!sensorsData.inputLiquidLevel) && (sensorsData.mainPower)){
-        return 5; //Авария - работа с пустым перегонным кубом
+        return 34; //Авария - работа с пустым перегонным кубом
       }
       if((!sensorsData.inputLiquidLevel) && (sensorsData.addPower)){
-        return 5; //Авария - работа с пустым перегонным кубом
+        return 34; //Авария - работа с пустым перегонным кубом
       }
       if((sensorsData.outputLiquidLevel1) || (sensorsData.outputLiquidLevel2) || (sensorsData.outputLiquidLevel3)){
-        return 5; //Авария - перелив в одной из приемных колб
+        return 35; //Авария - перелив в одной из приемных колб
       }
       if((sensorsData.temp1 >= params.heatingStateTemp1Min)&&(sensorsData.temp1 <= params.heatingStateTemp1Max)&&
       (sensorsData.temp2 >= params.heatingStateTemp2Min)&&(sensorsData.temp2 <= params.heatingStateTemp2Max)&&
       (params.heatingStateMainPower == sensorsData.mainPower)&&(params.heatingStateAddPower == sensorsData.addPower)){
-        return 4; //Разогрев
+        return 1; //Разогрев
       }
       if((sensorsData.temp1 >= params.onFirstStateTemp1Min)&&(sensorsData.temp1 <= params.onFirstStateTemp1Max)&&
       (sensorsData.temp2 >= params.onFirstStateTemp2Min)&&(sensorsData.temp2 <= params.onFirstStateTemp2Max)&&
       (params.onFirstStateMainPower == sensorsData.mainPower)&&(params.onFirstStateAddPower == sensorsData.addPower)){
-        return 1; //Отбор первой фракции
+        return 21; //Отбор первой фракции
       }
       if((sensorsData.temp1 >= params.onSecondStateTemp1Min)&&(sensorsData.temp1 <= params.onSecondStateTemp1Max)&&
       (sensorsData.temp2 >= params.onSecondStateTemp2Min)&&(sensorsData.temp2 <= params.onSecondStateTemp2Max)&&
       (params.onSecondStateMainPower == sensorsData.mainPower)&&(params.onSecondStateAddPower == sensorsData.addPower)){
-        return 2; //Отбор второй фракции
+        return 22; //Отбор второй фракции
       }
       if((sensorsData.temp1 >= params.onThirdStateTemp1Min)&&(sensorsData.temp1 <= params.onThirdStateTemp1Max)&&
       (sensorsData.temp2 >= params.onThirdStateTemp2Min)&&(sensorsData.temp2 <= params.onThirdStateTemp2Max)&&
       (params.onThirdStateMainPower == sensorsData.mainPower)&&(params.onThirdStateAddPower == sensorsData.addPower)){
-        return 2; //Отбор третьей фракции
+        return 23; //Отбор третьей фракции
       }
     }
 };

@@ -59,14 +59,20 @@ const char setSensorsDataJS[] PROGMEM = R"=====(
     } else {
        document.querySelector('#smokeLevel').innerText = 'Задымление';
     };
-    if(data.status == 30){
-       document.querySelector('#status').innerText = 'Авария. Пожар';
+    if(data.status == 0){
+       document.querySelector('#status').innerText = 'Простой';
+    } else if(data.status == 1){
+       document.querySelector('#status').innerText = 'Разогрев';
     } else if(data.status == 31){
-       document.querySelector('#status').innerText = 'Авария. Утечка';
+       document.querySelector('#status').innerText = 'Авария. Количество открытых клапанов отбора отлично от 1.';
     } else if(data.status == 32){
-       document.querySelector('#status').innerText = 'Авария. Открыто несколько клапанов.';
+       document.querySelector('#status').innerText = 'Авария. Температура в перегонном кубе.';
     } else if(data.status == 33){
-       document.querySelector('#status').innerText = 'Авария. Работа при закрытом клапане.';
+       document.querySelector('#status').innerText = 'Авария. Температура в блоке МСД.';
+    } else if(data.status == 34){
+       document.querySelector('#status').innerText = 'Авария. Работа с пустым перегонным кубом.';
+    } else if(data.status == 35){
+       document.querySelector('#status').innerText = 'Авария. Перелив в одной из приемных колб.';
     } else if(data.status == 3){
        document.querySelector('#status').innerText = 'Авария';
     } else if(data.status == 21){
@@ -77,8 +83,6 @@ const char setSensorsDataJS[] PROGMEM = R"=====(
        document.querySelector('#status').innerText = 'Работа. Отбор третей фракции.';
     } else if(data.status == 2){
        document.querySelector('#status').innerText = 'Работа';
-    } else if(data.status == 1){
-       document.querySelector('#status').innerText = 'Простой';
     } else {
        document.querySelector('#status').innerText = 'Не определен';
     };

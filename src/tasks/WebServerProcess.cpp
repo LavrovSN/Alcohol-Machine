@@ -14,8 +14,6 @@
 
 
 typedef std::function<void(void)> THandlerFunction;
-const char ContentOne[] PROGMEM = "......";
-const char ContentTwo[] PROGMEM = "......";
 // Create my custom Blink Process
 class WebServerProcess : public Process
 {
@@ -42,7 +40,6 @@ protected:
       server.on("/setSensorsData.js", [this](){
          server.send(200, "text/javascript", setSensorsDataJS);
       });
-
       server.on("/setParams.js", [this](){
          server.send(200, "text/javascript", setParamsJS);
       });
