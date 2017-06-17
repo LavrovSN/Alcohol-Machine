@@ -22,23 +22,11 @@ struct s_data
     bool smokeLevel;
     int status;
 };
-
-/*void getstatus(struct SD){
-  bool result = false;
-  if ((x>=a) && (x<=b)){
-    result = true;
-  }
-  return result;
-}*/
-
-
 // Create my custom Blink Process
 class SensorsProcess : public Process
 {
 public:
   WebSocketServerProcess * ws;
-  //StaticJsonBuffer<500> jsonBuffer;
-  //JsonObject& data = jsonBuffer.createObject();
   // Call the Process constructor
   SensorsProcess(Scheduler &manager, ProcPriority pr, unsigned int period, WebSocketServerProcess * _ws = NULL)
     :  Process(manager, pr, period)
@@ -63,48 +51,39 @@ protected:
     // Create our service routine
     virtual void service()
     {
-    /*bool test = (random(2) == 1); //Random test
-      if (test)
-        Serial.println("T!");
-      else
-        Serial.println("F!");*/
-        //WebSocketServerProcess ws;
-        sensorsData.temp1 = random(0,100);
-        sensorsData.temp2 = random(0,100);
-        sensorsData.mainPower = (random(2)==1);
-        sensorsData.addPower = (random(2)==1);
-        sensorsData.valve1 = (random(2)==1);
-        sensorsData.valve2 = (random(2)==1);
-        sensorsData.valve3 = (random(2)==1);
-        sensorsData.valve4 = (random(2)==1);
-        sensorsData.inputLiquidLevel = (random(2)==1);
-        sensorsData.outputLiquidLevel1 = (random(2)==1);
-        sensorsData.outputLiquidLevel2 = (random(2)==1);
-        sensorsData.outputLiquidLevel3 = (random(2)==1);
-        sensorsData.airHumidity = random(0,100);
-        sensorsData.smokeLevel = (random(2)==1);
-        sensorsData.status = getStatus();
+      sensorsData.temp1 = random(0,100);
+      sensorsData.temp2 = random(0,100);
+      sensorsData.mainPower = (random(2)==1);
+      sensorsData.addPower = (random(2)==1);
+      sensorsData.valve1 = (random(2)==1);
+      sensorsData.valve2 = (random(2)==1);
+      sensorsData.valve3 = (random(2)==1);
+      sensorsData.valve4 = (random(2)==1);
+      sensorsData.inputLiquidLevel = (random(2)==1);
+      sensorsData.outputLiquidLevel1 = (random(2)==1);
+      sensorsData.outputLiquidLevel2 = (random(2)==1);
+      sensorsData.outputLiquidLevel3 = (random(2)==1);
+      sensorsData.airHumidity = random(0,100);
+      sensorsData.smokeLevel = (random(2)==1);
+      sensorsData.status = getStatus();
 
-        //config_t scfg = WebSocketServerProcess::getParams();
-        //Serial.println(scfg.crashStateTemp2Min);
-
-        char JSON[512];
-        sprintf(JSON,"{\"temp1\":%d,\"temp2\":%d,\"mainPower\":%d,\"addPower\":%d,\"valve1\":%d,\"valve2\":%d,\"valve3\":%d,\"valve4\":%d,\"inputLiquidLevel\":%d,\"outputLiquidLevel1\":%d,\"outputLiquidLevel2\":%d,\"outputLiquidLevel3\":%d,\"airHumidity\":%d,\"smokeLevel\":%d,\"status\":%d}",
-        sensorsData.temp1, //temp1
-        sensorsData.temp2, //temp2
-        sensorsData.mainPower, //mainPower
-        sensorsData.addPower, //addPower
-        sensorsData.valve1, //valve1
-        sensorsData.valve2, //valve2
-        sensorsData.valve3, //valve3
-        sensorsData.valve4, //valve4
-        sensorsData.inputLiquidLevel, //inputLiquidLevel
-        sensorsData.outputLiquidLevel1, //outputLiquidLevel1
-        sensorsData.outputLiquidLevel2, //outputLiquidLevel2
-        sensorsData.outputLiquidLevel3, //outputLiquidLevel3
-        sensorsData.airHumidity, //airHumidity
-        sensorsData.smokeLevel, //smokeLevel
-        sensorsData.status); //Состояние
+      char JSON[512];
+      sprintf(JSON,"{\"temp1\":%d,\"temp2\":%d,\"mainPower\":%d,\"addPower\":%d,\"valve1\":%d,\"valve2\":%d,\"valve3\":%d,\"valve4\":%d,\"inputLiquidLevel\":%d,\"outputLiquidLevel1\":%d,\"outputLiquidLevel2\":%d,\"outputLiquidLevel3\":%d,\"airHumidity\":%d,\"smokeLevel\":%d,\"status\":%d}",
+      sensorsData.temp1, //temp1
+      sensorsData.temp2, //temp2
+      sensorsData.mainPower, //mainPower
+      sensorsData.addPower, //addPower
+      sensorsData.valve1, //valve1
+      sensorsData.valve2, //valve2
+      sensorsData.valve3, //valve3
+      sensorsData.valve4, //valve4
+      sensorsData.inputLiquidLevel, //inputLiquidLevel
+      sensorsData.outputLiquidLevel1, //outputLiquidLevel1
+      sensorsData.outputLiquidLevel2, //outputLiquidLevel2
+      sensorsData.outputLiquidLevel3, //outputLiquidLevel3
+      sensorsData.airHumidity, //airHumidity
+      sensorsData.smokeLevel, //smokeLevel
+      sensorsData.status); //Состояние
       ws->webSocket->broadcastTXT((char*)&JSON);
       delay(1000);
     }

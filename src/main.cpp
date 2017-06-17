@@ -3,8 +3,6 @@
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
 #include <ProcessScheduler.h>
-
-#include "./tasks/OTAUpdateProcess.cpp"
 #include "./tasks/WebServerProcess.cpp"
 #include "./tasks/WebSocketServerProcess.cpp"
 #include "./tasks/SensorsProcess.cpp"
@@ -52,8 +50,6 @@ void setupWifiClient(){
     ESP.restart();
   }
 }
-
-OTAUpdateProcess otaUpdate(sched, HIGH_PRIORITY,250,"0819");
 WebServerProcess webServer(sched, HIGH_PRIORITY,250);
 WebSocketServerProcess webSocketServer(sched, HIGH_PRIORITY,250);
 SensorsProcess sensorsProcess(sched, HIGH_PRIORITY,3000, &webSocketServer);
@@ -64,7 +60,6 @@ void setup() {
   setupWifiClient();
   delay(1000);
   Serial.println(WiFi.localIP());
-  otaUpdate.add(true);
   webServer.add(true);
   webSocketServer.add(true);
   sensorsProcess.add(true);
