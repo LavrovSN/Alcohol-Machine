@@ -73,6 +73,10 @@ const char setSensorsDataJS[] PROGMEM = R"=====(
        document.querySelector('#status').innerText = 'Авария. Работа с пустым перегонным кубом.';
     } else if(data.status == 35){
        document.querySelector('#status').innerText = 'Авария. Перелив в одной из приемных колб.';
+    } else if(data.status == 36){
+       document.querySelector('#status').innerText = 'Авария. Пожар.';
+    } else if(data.status == 37){
+       document.querySelector('#status').innerText = 'Авария. Утечка.';
     } else if(data.status == 3){
        document.querySelector('#status').innerText = 'Авария';
     } else if(data.status == 21){
