@@ -58,9 +58,6 @@ public:
 
 protected:
     config_t getParams(){
-      Serial.println("Параметры из getParams...");
-      Serial.print("cfg_heatingStateTemp1Max: "); Serial.println(cfg.heatingStateTemp1Max);
-      Serial.print("cfg_heatingStateTemp2Max: "); Serial.println(cfg.heatingStateTemp2Max);
       return cfg;
     }
     virtual void setup()
@@ -104,35 +101,6 @@ private:
                   char JSON[1024];
                   sprintf(JSON,"{\"heatingStateTemp1Min\":%d,\"heatingStateTemp1Max\":%d,\"heatingStateTemp2Min\":%d,\"heatingStateTemp2Max\":%d,\"heatingStateMainPower\":%d,\"heatingStateAddPower\":%d,\"onFirstStateTemp1Min\":%d,\"onFirstStateTemp1Max\":%d,\"onFirstStateTemp2Min\":%d,\"onFirstStateTemp2Max\":%d,\"onFirstStateMainPower\":%d,\"onFirstStateAddPower\":%d,\"onSecondStateTemp1Min\":%d,\"onSecondStateTemp1Max\":%d,\"onSecondStateTemp2Min\":%d,\"onSecondStateTemp2Max\":%d,\"onSecondStateMainPower\":%d,\"onSecondStateAddPower\":%d,\"onThirdStateTemp1Min\":%d,\"onThirdStateTemp1Max\":%d,\"onThirdStateTemp2Min\":%d,\"onThirdStateTemp2Max\":%d,\"onThirdStateMainPower\":%d,\"onThirdStateAddPower\":%d,\"crashStateTemp1Min\":%d,\"crashStateTemp1Max\":%d,\"crashStateTemp2Min\":%d,\"crashStateTemp2Max\":%d}",cfg.heatingStateTemp1Min,cfg.heatingStateTemp1Max,cfg.heatingStateTemp2Min,cfg.heatingStateTemp2Max,cfg.heatingStateMainPower,cfg.heatingStateAddPower,cfg.onFirstStateTemp1Min,cfg.onFirstStateTemp1Max,cfg.onFirstStateTemp2Min,cfg.onFirstStateTemp2Max,cfg.onFirstStateMainPower,cfg.onFirstStateAddPower,cfg.onSecondStateTemp1Min,cfg.onSecondStateTemp1Max,cfg.onSecondStateTemp2Min,cfg.onSecondStateTemp2Max,cfg.onSecondStateMainPower,cfg.onSecondStateAddPower,cfg.onThirdStateTemp1Min,cfg.onThirdStateTemp1Max,cfg.onThirdStateTemp2Min,cfg.onThirdStateTemp2Max,cfg.onThirdStateMainPower,cfg.onThirdStateAddPower,cfg.crashStateTemp1Min,cfg.crashStateTemp1Max,cfg.crashStateTemp2Min,cfg.crashStateTemp2Max);
                   webSocket->sendTXT(num, (char*)&JSON);
-                  Serial.println("Отправка параметров...");
-    Serial.print("cfg.heatingStateTemp1Min: "); Serial.println(cfg.heatingStateTemp1Min);
-    Serial.print("cfg.heatingStateTemp1Max: "); Serial.println(cfg.heatingStateTemp1Max);
-    Serial.print("cfg.heatingStateTemp2Min: "); Serial.println(cfg.heatingStateTemp2Min);
-    Serial.print("cfg.heatingStateTemp2Max: "); Serial.println(cfg.heatingStateTemp2Max);
-    Serial.print("cfg.heatingStateMainPower: "); Serial.println(cfg.heatingStateMainPower);
-    Serial.print("cfg.heatingStateAddPower: "); Serial.println(cfg.heatingStateAddPower);
-    Serial.print("cfg.onFirstStateTemp1Min: "); Serial.println(cfg.onFirstStateTemp1Min);
-    Serial.print("cfg.onFirstStateTemp1Max: "); Serial.println(cfg.onFirstStateTemp1Max);
-    Serial.print("cfg.onFirstStateTemp2Min: "); Serial.println(cfg.onFirstStateTemp2Min);
-    Serial.print("cfg.onFirstStateTemp2Max: "); Serial.println(cfg.onFirstStateTemp2Max);
-    Serial.print("cfg.onFirstStateMainPower: "); Serial.println(cfg.onFirstStateMainPower);
-    Serial.print("cfg.onFirstStateAddPower: "); Serial.println(cfg.onFirstStateAddPower);
-    Serial.print("cfg.onSecondStateTemp1Min: "); Serial.println(cfg.onSecondStateTemp1Min);
-    Serial.print("cfg.onSecondStateTemp1Max: "); Serial.println(cfg.onSecondStateTemp1Max);
-    Serial.print("cfg.onSecondStateTemp2Min: "); Serial.println(cfg.onSecondStateTemp2Min);
-    Serial.print("cfg.onSecondStateTemp2Max: "); Serial.println(cfg.onSecondStateTemp2Max);
-    Serial.print("cfg.onSecondStateMainPower: "); Serial.println(cfg.onSecondStateMainPower);
-    Serial.print("cfg.onSecondStateAddPower: "); Serial.println(cfg.onSecondStateAddPower);
-    Serial.print("cfg.onThirdStateTemp1Min: "); Serial.println(cfg.onThirdStateTemp1Min);
-    Serial.print("cfg.onThirdStateTemp1Max: "); Serial.println(cfg.onThirdStateTemp1Max);
-    Serial.print("cfg.onThirdStateTemp2Min: "); Serial.println(cfg.onThirdStateTemp2Min);
-    Serial.print("cfg.onThirdStateTemp2Max: "); Serial.println(cfg.onThirdStateTemp2Max);
-    Serial.print("cfg.onThirdStateMainPower: "); Serial.println(cfg.onThirdStateMainPower);
-    Serial.print("cfg.onThirdStateAddPower: "); Serial.println(cfg.onThirdStateAddPower);
-    Serial.print("cfg.crashStateTemp1Min: "); Serial.println(cfg.crashStateTemp1Min);
-    Serial.print("cfg.crashStateTemp1Max: "); Serial.println(cfg.crashStateTemp1Max);
-    Serial.print("cfg.crashStateTemp2Min: "); Serial.println(cfg.crashStateTemp2Min);
-    Serial.print("cfg.crashStateTemp2Max: "); Serial.println(cfg.crashStateTemp2Max);
               }
               break;
           case WStype_TEXT:
@@ -178,8 +146,6 @@ private:
               cfg.crashStateTemp2Min = root["crashStateTemp2Min"];
               cfg.crashStateTemp2Max = root["crashStateTemp2Max"];
               root.printTo(Serial);
-              Serial.println();
-              Serial.println("Тест объекта...");
               Serial.println(cfg.crashStateTemp1Min);
               Serial.println("Запись объекта...");
               EEPROM.begin (512);

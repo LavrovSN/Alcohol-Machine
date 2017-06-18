@@ -95,12 +95,10 @@ protected:
     int getStatus(){
       params = ws->getParams();
       //params = ws -> scfg;
-      Serial.println("Текущие ПАРАМЕТРЫ... ");
-      Serial.print("heatingStateTemp1Max: "); Serial.println(params.heatingStateTemp1Max);
-      Serial.print("heatingStateTemp2Max: "); Serial.println(params.heatingStateTemp2Max);
+      //Serial.println("Текущие ПАРАМЕТРЫ... ");
+      //Serial.print("heatingStateTemp1Max: "); Serial.println(params.heatingStateTemp1Max);
+      //Serial.print("heatingStateTemp2Max: "); Serial.println(params.heatingStateTemp2Max);
       //Serial.println(params.crashStateTemp2Min);
-      //sensorsData
-      //params
       int outputValveCount = 0; //Количество открытых выпускных клапанов
       if (sensorsData.valve1){
 		      outputValveCount++;
@@ -164,7 +162,6 @@ protected:
       if (!sensorsData.mainPower && !sensorsData.addPower){
         return 0; //Состояние - "Простой", если оба нагревательных элемента не активны
       }
-      Serial.println("ВАЩЕ ПИЗДЕЦ 99");
       return 99;
     }
 };
