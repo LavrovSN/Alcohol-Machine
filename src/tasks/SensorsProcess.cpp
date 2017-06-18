@@ -24,6 +24,9 @@ struct s_data
 // Create my custom Blink Process
 class SensorsProcess : public Process
 {
+
+int counter = 0;
+int cStatus = 99;
 public:
   WebSocketServerProcess * ws;
   // Call the Process constructor
@@ -37,7 +40,6 @@ public:
 protected:
     virtual void setup()
     {
-
       Serial.println("SensorsProcess started");
     }
 
@@ -50,7 +52,19 @@ protected:
     // Create our service routine
     virtual void service()
     {
-      delay(300);
+      delay(200);
+
+      if (counter == 5){
+        //Serial.println("Запрос статуса...");
+        cStatus = getStatus();
+        counter = 0;
+      } else {
+        counter++;
+      };
+      //Serial.print("Counter: ");
+      //Serial.println(counter);
+      //Serial.print("cStatus: ");
+      //Serial.println(cStatus);
 
       sensorsData.temp1 = 55; //random(0,100);
       sensorsData.temp2 = 60; //random(0,100);
@@ -66,10 +80,7 @@ protected:
       sensorsData.outputLiquidLevel3 = false; //(random(2)==1);
       sensorsData.airHumidity = random(0,96);
       sensorsData.smokeLevel = false; //(random(2)==1);
-      Serial.println("Запрос статуса...");
-      sensorsData.status = getStatus();
-      Serial.print("Статус: ");
-      Serial.println(sensorsData.status);
+      sensorsData.status = cStatus;
 
       char JSON[512];
       sprintf(JSON,"{\"temp1\":%d,\"temp2\":%d,\"mainPower\":%d,\"addPower\":%d,\"valve1\":%d,\"valve2\":%d,\"valve3\":%d,\"valve4\":%d,\"inputLiquidLevel\":%d,\"outputLiquidLevel1\":%d,\"outputLiquidLevel2\":%d,\"outputLiquidLevel3\":%d,\"airHumidity\":%d,\"smokeLevel\":%d,\"status\":%d}",
