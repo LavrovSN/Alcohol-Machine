@@ -423,8 +423,6 @@ const char indexHTML[] PROGMEM = R"=====(
 <script src="setSensorsData.js" defer></script>
 <script src="setParams.js" defer></script>
 <script src="app.js" defer></script>
-<script src="blurAndFocus.js" defer></script>
-<script src="blurAndFocus2.js" defer></script>
 </body>
 </html>
 

@@ -6,8 +6,8 @@
 #include "./tasks/WebServerProcess.cpp"
 #include "./tasks/WebSocketServerProcess.cpp"
 #include "./tasks/SensorsProcess.cpp"
-
 #include "config.h"
+
 Scheduler sched;
 
 //////////////////////

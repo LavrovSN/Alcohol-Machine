@@ -84,7 +84,7 @@ const char setSensorsDataJS[] PROGMEM = R"=====(
     } else if(data.status == 22){
        document.querySelector('#status').innerText = 'Работа. Отбор второй фракции.';
     } else if(data.status == 23){
-       document.querySelector('#status').innerText = 'Работа. Отбор третей фракции.';
+       document.querySelector('#status').innerText = 'Работа. Отбор третьей фракции.';
     } else if(data.status == 2){
        document.querySelector('#status').innerText = 'Работа';
     } else {

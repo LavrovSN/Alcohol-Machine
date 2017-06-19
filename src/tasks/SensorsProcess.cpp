@@ -3,6 +3,7 @@
 
 #include <ProcessScheduler.h>
 #include "WebSocketServerProcess.cpp"
+
 struct s_data
 {
     int temp1;
@@ -24,10 +25,11 @@ struct s_data
 // Create my custom Blink Process
 class SensorsProcess : public Process
 {
-
 int counter = 0;
-int cStatus = 99;
+int cStatus = 98;
+
 public:
+  s_data sensorsData;
   WebSocketServerProcess * ws;
   // Call the Process constructor
   SensorsProcess(Scheduler &manager, ProcPriority pr, unsigned int period, WebSocketServerProcess * _ws = NULL)
@@ -35,8 +37,7 @@ public:
     {
         ws = _ws;
     }
-    config_t params;
-    s_data sensorsData;
+    //config_t params = ;;///////////////
 protected:
     virtual void setup()
     {
@@ -53,34 +54,23 @@ protected:
     virtual void service()
     {
       delay(200);
-
       if (counter == 5){
         //Serial.println("Запрос статуса...");
-        cStatus = getStatus();
+        Serial.print("Status: "); Serial.println(cStatus);
         counter = 0;
       } else {
         counter++;
       };
+
+      setSensorsData(random(1,5));
+      cStatus = getStatus(ws->getParams());
+
+
       //Serial.print("Counter: ");
       //Serial.println(counter);
       //Serial.print("cStatus: ");
       //Serial.println(cStatus);
 
-      sensorsData.temp1 = 55; //random(0,100);
-      sensorsData.temp2 = 60; //random(0,100);
-      sensorsData.mainPower = true; //(random(2)==1);
-      sensorsData.addPower = false; //(random(2)==1);
-      sensorsData.valve1 = false; //(random(2)==1);
-      sensorsData.valve2 = false; //(random(2)==1);
-      sensorsData.valve3 = true; //(random(2)==1);
-      sensorsData.valve4 = false; //(random(2)==1);
-      sensorsData.inputLiquidLevel = true; //(random(2)==1);
-      sensorsData.outputLiquidLevel1 = false; //(random(2)==1);
-      sensorsData.outputLiquidLevel2 = false; //(random(2)==1);
-      sensorsData.outputLiquidLevel3 = false; //(random(2)==1);
-      sensorsData.airHumidity = random(0,96);
-      sensorsData.smokeLevel = false; //(random(2)==1);
-      sensorsData.status = cStatus;
 
       char JSON[512];
       sprintf(JSON,"{\"temp1\":%d,\"temp2\":%d,\"mainPower\":%d,\"addPower\":%d,\"valve1\":%d,\"valve2\":%d,\"valve3\":%d,\"valve4\":%d,\"inputLiquidLevel\":%d,\"outputLiquidLevel1\":%d,\"outputLiquidLevel2\":%d,\"outputLiquidLevel3\":%d,\"airHumidity\":%d,\"smokeLevel\":%d,\"status\":%d}",
@@ -100,15 +90,157 @@ protected:
       sensorsData.smokeLevel, //smokeLevel
       sensorsData.status); //Состояние
       ws->webSocket->broadcastTXT((char*)&JSON);
+      Serial.println("Показания отправлены...");
     }
 
   private:
-    int getStatus(){
-      params = ws->getParams();
+    void setSensorsData(int randomSD){
+      if (randomSD == 1){
+        Serial.print("RandomSD: "); Serial.println(randomSD);
+        sensorsData.temp1 = random(0,50);
+        sensorsData.temp2 = random(0,50); //random(0,100);
+        sensorsData.mainPower = true; //(random(2)==1);
+        sensorsData.addPower = false; //(random(2)==1);
+        sensorsData.valve1 = true; //(random(2)==1);
+        sensorsData.valve2 = false; //(random(2)==1);
+        sensorsData.valve3 = false; //(random(2)==1);
+        sensorsData.valve4 = false; //(random(2)==1);
+        sensorsData.inputLiquidLevel = true; //(random(2)==1);
+        sensorsData.outputLiquidLevel1 = false; //(random(2)==1);
+        sensorsData.outputLiquidLevel2 = false; //(random(2)==1);
+        sensorsData.outputLiquidLevel3 = false; //(random(2)==1);
+        sensorsData.airHumidity = random(0,95);
+        sensorsData.smokeLevel = false; //(random(2)==1);
+        sensorsData.status = cStatus;
+      };
+      if (randomSD == 2){
+        Serial.print("RandomSD: "); Serial.println(randomSD);
+        sensorsData.temp1 = random(51,83);
+        sensorsData.temp2 = random(50,80); //random(0,100);
+        sensorsData.mainPower = true; //(random(2)==1);
+        sensorsData.addPower = false; //(random(2)==1);
+        sensorsData.valve1 = true; //(random(2)==1);
+        sensorsData.valve2 = false; //(random(2)==1);
+        sensorsData.valve3 = false; //(random(2)==1);
+        sensorsData.valve4 = true; //(random(2)==1);
+        sensorsData.inputLiquidLevel = true; //(random(2)==1);
+        sensorsData.outputLiquidLevel1 = false; //(random(2)==1);
+        sensorsData.outputLiquidLevel2 = false; //(random(2)==1);
+        sensorsData.outputLiquidLevel3 = false; //(random(2)==1);
+        sensorsData.airHumidity = random(0,95);
+        sensorsData.smokeLevel = false; //(random(2)==1);
+        sensorsData.status = cStatus;
+      };
+      if (randomSD == 3){
+        Serial.print("RandomSD: "); Serial.println(randomSD);
+        sensorsData.temp1 = random(60,110);
+        sensorsData.temp2 = random(83,94); //random(0,100);
+        sensorsData.mainPower = true; //(random(2)==1);
+        sensorsData.addPower = true; //(random(2)==1);
+        sensorsData.valve1 = false; //(random(2)==1);
+        sensorsData.valve2 = true; //(random(2)==1);
+        sensorsData.valve3 = false; //(random(2)==1);
+        sensorsData.valve4 = false; //(random(2)==1);
+        sensorsData.inputLiquidLevel = true; //(random(2)==1);
+        sensorsData.outputLiquidLevel1 = false; //(random(2)==1);
+        sensorsData.outputLiquidLevel2 = false; //(random(2)==1);
+        sensorsData.outputLiquidLevel3 = false; //(random(2)==1);
+        sensorsData.airHumidity = random(0,95);
+        sensorsData.smokeLevel = false; //(random(2)==1);
+        sensorsData.status = cStatus;
+      };
+      if (randomSD == 4){
+        Serial.print("RandomSD: "); Serial.println(randomSD);
+        sensorsData.temp1 = random(90,115);
+        sensorsData.temp2 = random(95,99); //random(0,100);
+        sensorsData.mainPower = true; //(random(2)==1);
+        sensorsData.addPower = true; //(random(2)==1);
+        sensorsData.valve1 = false; //(random(2)==1);
+        sensorsData.valve2 = false; //(random(2)==1);
+        sensorsData.valve3 = true; //(random(2)==1);
+        sensorsData.valve4 = false; //(random(2)==1);
+        sensorsData.inputLiquidLevel = true; //(random(2)==1);
+        sensorsData.outputLiquidLevel1 = false; //(random(2)==1);
+        sensorsData.outputLiquidLevel2 = false; //(random(2)==1);
+        sensorsData.outputLiquidLevel3 = false; //(random(2)==1);
+        sensorsData.airHumidity = random(0,95);
+        sensorsData.smokeLevel = false; //(random(2)==1);
+        sensorsData.status = cStatus;
+      };
+      if (randomSD == 5){
+        Serial.print("RandomSD: "); Serial.println(randomSD);
+        sensorsData.temp1 = random(110,120);
+        sensorsData.temp2 = random(110,120); //random(0,100);
+        sensorsData.mainPower = true; //(random(2)==1);
+        sensorsData.addPower = true; //(random(2)==1);
+        sensorsData.valve1 = false; //(random(2)==1);
+        sensorsData.valve2 = false; //(random(2)==1);
+        sensorsData.valve3 = true; //(random(2)==1);
+        sensorsData.valve4 = false; //(random(2)==1);
+        sensorsData.inputLiquidLevel = true; //(random(2)==1);
+        sensorsData.outputLiquidLevel1 = false; //(random(2)==1);
+        sensorsData.outputLiquidLevel2 = false; //(random(2)==1);
+        sensorsData.outputLiquidLevel3 = false; //(random(2)==1);
+        sensorsData.airHumidity = random(0,95);
+        sensorsData.smokeLevel = false; //(random(2)==1);
+        sensorsData.status = cStatus;
+      };
+    }
+
+    int getStatus(config_t params){
       //params = ws -> scfg;
-      //Serial.println("Текущие ПАРАМЕТРЫ... ");
-      //Serial.print("heatingStateTemp1Max: "); Serial.println(params.heatingStateTemp1Max);
-      //Serial.print("heatingStateTemp2Max: "); Serial.println(params.heatingStateTemp2Max);
+      /*Serial.println("Текущие ПАРАМЕТРЫ... ");
+      Serial.print("heatingStateTemp1Max: "); Serial.println(params.heatingStateTemp1Max);
+      Serial.print("heatingStateTemp2Max: "); Serial.println(params.heatingStateTemp2Max);
+
+      Serial.print("temp1: "); Serial.println(sensorsData.temp1);
+      Serial.print("temp2: "); Serial.println(sensorsData.temp2);*/
+
+      /*Serial.print("\t temp1: "); Serial.println(sensorsData.temp1);
+      Serial.print("\t temp2: "); Serial.println(sensorsData.temp2);
+      Serial.print("\t mainPower: "); Serial.println(sensorsData.mainPower);
+      Serial.print("\t addPower: "); Serial.println(sensorsData.addPower);
+      Serial.print("\t valve1: "); Serial.println(sensorsData.valve1);
+      Serial.print("\t valve2: "); Serial.println(sensorsData.valve2);
+      Serial.print("\t valve3: "); Serial.println(sensorsData.valve3);
+      Serial.print("\t valve4: "); Serial.println(sensorsData.valve4);
+      Serial.print("\t inputLiquidLevel: "); Serial.println(sensorsData.inputLiquidLevel);
+      Serial.print("\t outputLiquidLevel1: "); Serial.println(sensorsData.outputLiquidLevel1);
+      Serial.print("\t outputLiquidLevel2: "); Serial.println(sensorsData.outputLiquidLevel2);
+      Serial.print("\t outputLiquidLevel3: "); Serial.println(sensorsData.outputLiquidLevel3);
+      Serial.print("\t airHumidity: "); Serial.println(sensorsData.airHumidity);
+      Serial.print("\t smokeLevel: "); Serial.println(sensorsData.smokeLevel);
+      Serial.println("------------------------------");
+      Serial.print("\t heatingStateTemp1Min: "); Serial.println(params.heatingStateTemp1Min);
+      Serial.print("\t heatingStateTemp1Max: "); Serial.println(params.heatingStateTemp1Max);
+      Serial.print("\t heatingStateTemp2Min: "); Serial.println(params.heatingStateTemp2Min);
+      Serial.print("\t heatingStateTemp2Max: "); Serial.println(params.heatingStateTemp2Max);
+      Serial.print("\t heatingStateMainPower: "); Serial.println(params.heatingStateMainPower);
+      Serial.print("\t heatingStateAddPower: "); Serial.println(params.heatingStateAddPower);
+      Serial.print("\t onFirstStateTemp1Min: "); Serial.println(params.onFirstStateTemp1Min);
+      Serial.print("\t onFirstStateTemp1Max: "); Serial.println(params.onFirstStateTemp1Max);
+      Serial.print("\t onFirstStateTemp2Min: "); Serial.println(params.onFirstStateTemp2Min);
+      Serial.print("\t onFirstStateTemp2Max: "); Serial.println(params.onFirstStateTemp2Max);
+      Serial.print("\t onFirstStateMainPower: "); Serial.println(params.onFirstStateMainPower);
+      Serial.print("\t onFirstStateAddPower: "); Serial.println(params.onFirstStateAddPower);
+      Serial.print("\t onSecondStateTemp1Min: "); Serial.println(params.onSecondStateTemp1Min);
+      Serial.print("\t onSecondStateTemp1Max: "); Serial.println(params.onSecondStateTemp1Max);
+      Serial.print("\t onSecondStateTemp2Min: "); Serial.println(params.onSecondStateTemp2Min);
+      Serial.print("\t onSecondStateTemp2Max: "); Serial.println(params.onSecondStateTemp2Max);
+      Serial.print("\t onSecondStateMainPower: "); Serial.println(params.onSecondStateMainPower);
+      Serial.print("\t onSecondStateAddPower: "); Serial.println(params.onSecondStateAddPower);
+      Serial.print("\t onThirdStateTemp1Min: "); Serial.println(params.onThirdStateTemp1Min);
+      Serial.print("\t onThirdStateTemp1Max: "); Serial.println(params.onThirdStateTemp1Max);
+      Serial.print("\t onThirdStateTemp2Min: "); Serial.println(params.onThirdStateTemp2Min);
+      Serial.print("\t onThirdStateTemp2Max: "); Serial.println(params.onThirdStateTemp2Max);
+      Serial.print("\t onThirdStateMainPower: "); Serial.println(params.onThirdStateMainPower);
+      Serial.print("\t onThirdStateAddPower: "); Serial.println(params.onThirdStateAddPower);
+      Serial.print("\t crashStateTemp1Min: "); Serial.println(params.crashStateTemp1Min);
+      Serial.print("\t crashStateTemp1Max: "); Serial.println(params.crashStateTemp1Max);
+      Serial.print("\t crashStateTemp2Min: "); Serial.println(params.crashStateTemp2Min);
+      Serial.print("\t crashStateTemp2Max: "); Serial.println(params.crashStateTemp2Max);
+*/
+
       //Serial.println(params.crashStateTemp2Min);
       int outputValveCount = 0; //Количество открытых выпускных клапанов
       if (sensorsData.valve1){

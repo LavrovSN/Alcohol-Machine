@@ -11,8 +11,6 @@
 #include "../web/click.h"
 #include "../web/app.h"
 #include "../web/inputCheck.h"
-#include "../web/blurAndFocus.h"
-#include "../web/blurAndFocus2.h"
 #include "../web/tf.h"
 
 
@@ -51,12 +49,6 @@ protected:
       });
       server.on("/click.js", [this](){
         server.send(200, "text/javascript", clickJS);
-      });
-      server.on("/blurAndFocus.js", [this](){
-        server.send(200, "text/javascript", blurAndFocusJS);
-      });
-      server.on("/blurAndFocus2.js", [this](){
-        server.send(200, "text/javascript", blurAndFocus2JS);
       });
       server.on("/tf.js", [this](){
         server.send(200, "text/javascript", tfJS);
